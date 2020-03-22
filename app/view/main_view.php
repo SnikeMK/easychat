@@ -13,7 +13,10 @@
 	</div>
 </div>
 <form method="post" id="chat-form">
-<input type="text" id="nick" placeholder="Nickname"> <input type="text" id="message-text" autocomplete="off" placeholder="Message"> <input type="submit" value="Send">
+<div>
+	<input type="text" id="nick" placeholder="Nickname">
+	<input type="text" id="message-text" autocomplete="off" placeholder="Message">
+	<input type="submit" value="Send"></div>
 </form>
 
 <script type="text/javascript">
@@ -60,7 +63,8 @@ function insertMessage(data) {
 
 function update() {
 	fetch('chat/loadMessages', {
-    method: 'post'
+    method: 'post',
+		body: JSON.stringify(msg_index)
   })
 	.then(function(response) {
 		response.json().then(function(data) {
@@ -68,5 +72,5 @@ function update() {
 		});
 	});
 }
-interval = setInterval(update,2000);
+interval = setInterval(update,2500);
 </script>

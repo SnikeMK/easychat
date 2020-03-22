@@ -13,7 +13,9 @@ class ControllerChat extends Controller {
 	}
 
 	public function loadMessages() {
-		$messages = $this->getMessage();
+		$msg_index = json_decode(file_get_contents('php://input'));
+		$this->load->model('chat');
+		$messages = $this->model_chat->getMessage($msg_index);
 		echo json_encode($messages);
 	}
 
