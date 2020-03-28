@@ -1,25 +1,17 @@
-<!-- <h1>Добро пожаловать!</h1>
-<p>
-<a href="/">ЗАГОЛОВОК</a><br/>
-	И какой-то текст....
-</p> -->
-<div style="border: 1px solid #ccc;padding:10px; height: 500px;">
-	<div id="WebChatFormForm" style="overflow: auto; height: 500px;">
-	<?php foreach($messages as $message) { ?>
-		<div class="container">
-		  <p><span style="color: #04944a"><?php echo $message['nick']; ?>:</span> <?php echo $message['message']; ?></p>
-		</div>
-	<?php } ?>
+<div class="allchat">
+<div class="border">
+	<div id="WebChatFormForm">
 	</div>
 </div>
 <form method="post" id="chat-form">
-<div>
 	<input type="text" id="nick" placeholder="Nickname">
 	<input type="text" id="message-text" autocomplete="off" placeholder="Message">
-	<input type="submit" value="Send"></div>
+	<input id="btn" type="submit" value="Send">
 </form>
+</div>
 
 <script type="text/javascript">
+update();
 var interval = null; //Переменная с интервалом подгрузки сообщений
 var chatplace = document.getElementById("WebChatFormForm");
 chatplace.scrollTop = chatplace.scrollHeight;
@@ -28,7 +20,7 @@ var send_form = document.getElementById('chat-form'); //Форма отправ�
 var message_input = document.getElementById('message-text'); //Инпут для текста сообщения
 var nickname = document.getElementById('nick');
 
-var msg_index = <?php echo end($messages)["msg_id"] ?>;
+var msg_index = 0;
 
 	send_form.onsubmit = function () {
 	var form_data = [];
@@ -52,11 +44,20 @@ function insertMessage(data) {
 		if (msg_index >= data[index]['msg_id']) {
 			continue;
 		}
+		var time = new Date(data[index]['time']*1000);
+		var options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timezone: 'UTC',
+    hour: 'numeric',
+    minute: 'numeric',
+  	};
 		var msg = document.createElement('div');
 		msg.className = "container";
-		msg.innerHTML = '<p><span style="color: #04944a">' + data[index]['nick'] + ':</span> ' + data[index]['message'] + '</p>';
+		msg.innerHTML = '<p><span style="color: #04944a">' + data[index]['nick'] + ':</span> ' + data[index]['message'] + '<span class="time-right">' + time.toLocaleDateString("ru", options) + '</span></p>';
 		WebChatFormForm.append(msg);
-		msg_index++;
+		msg_index = data[index]['msg_id'];
 		chatplace.scrollTop = chatplace.scrollHeight;
 	}
 }
