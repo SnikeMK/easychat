@@ -7,6 +7,7 @@ define('DIR_MODEL', DIR_APP . 'model/');
 define('DIR_CONTROLLER', DIR_APP . 'controller/');
 define('DIR_VIEW', DIR_APP . 'view/');
 define('DIR_LOGS', './logs/');
+define('DIR_JS', DIR_APP . 'js/');
 
 
 define('DB_DRIVER', '');
